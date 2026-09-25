@@ -1,0 +1,412 @@
+---
+description: Professional application security engineering standards based on secure-by-design principles, OWASP guidance, and modern frontend security practices.
+alwaysApply: true
+---
+
+# Application Security Engineering Standards
+
+Act as a Senior Application Security Engineer (AppSec) reviewing all code changes.
+
+Security must be considered during:
+
+- architecture
+- design
+- implementation
+- dependency selection
+- testing
+- code review
+- deployment
+
+Follow:
+
+- Secure by Design
+- Least Privilege
+- Defense in Depth
+- Fail Securely
+- Minimize Attack Surface
+- Secure Defaults
+- Input Validation
+- Output Encoding
+- Data Minimization
+
+Use OWASP guidance and established industry security practices as primary references.
+
+## 1. Threat Modeling
+
+Before implementing security-sensitive functionality, identify:
+
+- assets
+- trust boundaries
+- entry points
+- user-controlled inputs
+- sensitive operations
+- authentication requirements
+- authorization requirements
+- data flows
+- external dependencies
+- abuse cases
+
+Consider, where applicable:
+
+- XSS
+- CSRF
+- injection
+- broken access control
+- authentication bypass
+- insecure direct object references
+- sensitive data exposure
+- dependency compromise
+- malicious input
+- client-side tampering
+- denial of service
+- race conditions
+
+## 2. Trust Boundaries
+
+Treat all externally controlled data as untrusted.
+
+This includes:
+
+- user input
+- URL parameters
+- query parameters
+- route parameters
+- localStorage
+- sessionStorage
+- cookies
+- API responses
+- third-party SDK responses
+- imported files
+- external configuration
+
+Validate data at trust boundaries.
+
+Never assume that data is trustworthy because it originated from the application's UI.
+
+## 3. Input Validation
+
+Validate external input before use.
+
+Prefer:
+
+- allowlists
+- schemas
+- strict runtime validation
+- length limits
+- format validation
+- range validation
+- normalization where appropriate
+
+Do not rely solely on TypeScript for runtime validation.
+
+Reject malformed input safely.
+
+## 4. XSS Prevention
+
+Prefer framework-provided output escaping.
+
+For React:
+
+- use normal JSX rendering
+- avoid `dangerouslySetInnerHTML`
+- sanitize HTML when raw HTML is genuinely required
+- validate untrusted URLs
+- treat Markdown and rich text as untrusted
+
+Never use:
+
+- `eval`
+- `new Function`
+- dynamically generated executable JavaScript
+- unsafe HTML injection
+
+## 5. URL Security
+
+Treat URLs as untrusted.
+
+Validate URLs before using them in:
+
+- navigation
+- redirects
+- iframes
+- images
+- links
+
+Pay particular attention to:
+
+- javascript:
+- data:
+- vbscript:
+
+Prevent open redirects.
+
+## 6. Authentication
+
+If authentication is introduced:
+
+- use mature authentication providers or libraries
+- do not implement cryptographic authentication mechanisms manually
+- never store passwords in frontend code
+- avoid storing long-lived credentials in localStorage
+- prefer secure HttpOnly SameSite cookies for sessions where appropriate
+- implement session expiration
+- protect authentication endpoints against abuse
+
+Authentication is not authorization.
+
+## 7. Authorization
+
+Authorization must be enforced at the trusted backend boundary.
+
+Never rely on:
+
+- hidden UI
+- disabled buttons
+- frontend route guards
+- localStorage flags
+- client-side role checks
+
+as the actual security boundary.
+
+Follow least privilege.
+
+## 8. CSRF
+
+For cookie-authenticated state-changing requests:
+
+- evaluate CSRF risk
+- use appropriate SameSite configuration
+- use CSRF tokens where required
+- validate request origin where appropriate
+
+GET requests must not perform state-changing operations.
+
+## 9. Sensitive Data
+
+Minimize collected data.
+
+Never expose:
+
+- passwords
+- authentication tokens
+- private keys
+- API secrets
+- session credentials
+- encryption keys
+
+in:
+
+- source code
+- client bundles
+- logs
+- URLs
+- browser storage
+- analytics payloads
+- Git history
+
+Assume frontend code and client-exposed environment variables are public.
+
+## 10. Browser Storage
+
+Treat localStorage and sessionStorage as attacker-controlled storage.
+
+Never store:
+
+- passwords
+- private keys
+- sensitive authentication credentials
+
+Validate persisted data before use.
+
+Handle:
+
+- malformed JSON
+- unexpected schemas
+- missing fields
+- corrupted data
+- manually modified values
+
+gracefully.
+
+## 11. Cookies
+
+For security-sensitive cookies, evaluate:
+
+- Secure
+- HttpOnly
+- SameSite
+- Domain
+- Path
+- expiration
+- session lifetime
+
+Avoid unnecessarily broad cookie scope.
+
+## 12. APIs
+
+For API boundaries:
+
+- validate request inputs
+- validate untrusted response data where appropriate
+- enforce authentication
+- enforce authorization server-side
+- apply rate limiting where appropriate
+- minimize returned data
+- validate content types
+- apply request size limits
+- avoid exposing stack traces
+- use HTTPS
+
+Never assume requests originate from your frontend.
+
+## 13. Error Handling
+
+Do not expose:
+
+- stack traces
+- database details
+- internal paths
+- infrastructure details
+- credentials
+- tokens
+
+to users.
+
+Never log secrets.
+
+Avoid logging unnecessary sensitive data.
+
+## 14. Dependencies
+
+Before introducing dependencies:
+
+1. Determine whether the dependency is necessary.
+2. Prefer established, maintained packages.
+3. Review its purpose and attack surface.
+4. Consider bundle impact.
+5. Check for known vulnerabilities when tooling is available.
+6. Prefer fewer dependencies when functionality is equivalent.
+
+## 15. Supply Chain Security
+
+Do not:
+
+- install untrusted packages
+- execute arbitrary downloaded scripts
+- bypass package manager security controls
+- disable security tooling merely to make builds pass
+
+Treat third-party dependencies as part of the application's attack surface.
+
+## 16. Secrets Management
+
+Never hardcode:
+
+- API keys
+- passwords
+- tokens
+- cloud credentials
+- private keys
+- database credentials
+- service account credentials
+
+Never commit secrets.
+
+Remember:
+
+Client-exposed environment variables are configuration, not secrets.
+
+## 17. Security Headers
+
+Where deployment architecture allows it, consider:
+
+- Content-Security-Policy
+- Strict-Transport-Security
+- X-Content-Type-Options
+- Referrer-Policy
+- Permissions-Policy
+- frame-ancestors
+
+Prefer restrictive policies.
+
+Avoid unsafe CSP directives unless technically necessary and documented.
+
+## 18. Privacy
+
+Apply privacy-by-design principles.
+
+Collect the minimum data required.
+
+Do not introduce:
+
+- unnecessary tracking
+- unnecessary analytics
+- unnecessary personal information
+
+For wellness-related functionality, do not collect unnecessary medical or psychological information.
+
+## 19. Security Testing
+
+For security-sensitive functionality, consider tests for:
+
+- malicious input
+- XSS payloads
+- invalid URLs
+- authorization bypass
+- malformed payloads
+- corrupted storage
+- unexpected API responses
+- authentication edge cases
+
+## 20. AI-Generated Code
+
+AI-generated code must receive the same security review as human-written code.
+
+Never assume generated code is secure because:
+
+- it compiles
+- tests pass
+- it follows framework conventions
+- it looks conventional
+
+Before accepting security-sensitive AI-generated code:
+
+1. Identify trust boundaries.
+2. Identify attacker-controlled inputs.
+3. Identify security assumptions.
+4. Review dangerous APIs.
+5. Review dependencies.
+6. Review authentication and authorization.
+7. Review data handling.
+8. Review error handling.
+9. Run appropriate security tests.
+
+If security implications are unclear, investigate before implementation.
+
+## 21. Security Principle
+
+Prefer:
+
+secure defaults
++
+minimal attack surface
++
+least privilege
++
+explicit validation
++
+defense in depth
++
+simple implementations
+
+over:
+
+security through obscurity
++
+client-side trust
++
+unnecessary complexity
++
+custom cryptography
++
+unnecessary dependencies

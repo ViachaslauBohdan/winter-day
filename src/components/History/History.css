@@ -1,0 +1,46 @@
+.history {
+  margin-top: 2rem;
+}
+
+.history__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.history__empty {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.history__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+
+.history__score {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  font-weight: 650;
+}
+
+.history__percent {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}

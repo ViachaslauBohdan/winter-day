@@ -1,0 +1,50 @@
+.checklist {
+  margin-top: 1.25rem;
+}
+
+.checklist__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+}
+
+.checklist__done {
+  margin-top: 1rem;
+  padding: 1.15rem 1.1rem 1.2rem;
+  border-radius: 1.25rem;
+  background: var(--celebration-bg);
+  border: 1px solid var(--celebration-line);
+  animation: rise 320ms ease;
+}
+
+.checklist__done-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1.1;
+}
+
+.checklist__done-copy {
+  margin: 0.4rem 0 0;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checklist__done {
+    animation: none;
+  }
+}

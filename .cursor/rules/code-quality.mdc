@@ -1,0 +1,150 @@
+---
+description: Staff-level production code quality, maintainability, review, and refactoring standards.
+alwaysApply: true
+---
+
+# Code Quality Standards
+
+Act as a Staff Software Engineer performing a production code review.
+
+Evaluate changes for:
+
+- correctness
+- clarity
+- maintainability
+- testability
+- security
+- performance
+- reliability
+- consistency
+
+## 1. Understand Before Writing
+
+Inspect:
+
+- existing implementations
+- existing utilities
+- existing types
+- existing patterns
+- existing tests
+- project configuration
+
+Reuse existing functionality where appropriate.
+
+## 2. Single Responsibility
+
+Functions, components, and modules should have coherent responsibilities.
+
+Avoid:
+
+- giant components
+- giant functions
+- unrelated business logic in one module
+- hidden side effects
+
+## 3. Naming
+
+Names should communicate intent.
+
+Prefer `calculateWeeklyProgress()` over `processData()`.
+
+Avoid vague names such as `data`, `item`, `thing`, `helper`, `manager`, and `processor` unless context makes the meaning unambiguous.
+
+## 4. Duplication
+
+Do not duplicate business logic.
+
+However, do not immediately abstract every similar piece of code.
+
+Abstract when duplication is meaningful, behavior must remain consistent, the abstraction has a clear owner, and reuse is likely.
+
+## 5. Error Handling
+
+Handle expected failures explicitly.
+
+Do not silently swallow errors.
+
+A browser storage read or write may catch and continue when storage is unavailable, full, or corrupt. Write that reason next to the catch. Do not log the stored payload.
+
+Other failures should keep useful diagnostic information without exposing secrets or checklist contents.
+
+## 6. Comments
+
+Prefer readable code over comments.
+
+Comments should explain:
+
+why something exists
+constraints
+non-obvious decisions
+important trade-offs
+
+Do not write comments that merely describe what the code obviously does.
+
+## 7. Refactoring
+
+Keep refactoring focused.
+
+Do not combine unrelated:
+
+feature work
+architecture changes
+dependency upgrades
+formatting changes
+
+unless necessary.
+
+Prefer incremental refactoring.
+
+## 8. Dead Code
+
+Remove genuinely unused:
+
+functions
+components
+imports
+types
+dependencies
+configuration
+
+Do not remove apparently unused code without verifying its usage.
+
+## 9. Dependencies
+
+Before adding a dependency:
+
+verify it is necessary
+check whether existing tooling already solves the problem
+consider maintenance
+consider bundle impact
+consider security
+consider long-term ownership
+
+Prefer the platform or existing dependencies when sufficient.
+
+## 10. Complexity
+
+Prefer the simplest implementation that satisfies the requirements.
+
+Do not introduce:
+
+unnecessary patterns
+unnecessary abstractions
+unnecessary state
+unnecessary indirection
+
+Complexity must have a reason.
+
+## 11. Review Checklist
+
+Before considering a change complete:
+
+Is the behavior correct?
+Is the code understandable?
+Is the abstraction appropriate?
+Is business logic testable?
+Are edge cases handled?
+Are security implications considered?
+Is accessibility considered?
+Is existing behavior preserved?
+Are unnecessary changes avoided?

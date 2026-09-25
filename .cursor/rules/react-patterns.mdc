@@ -1,0 +1,202 @@
+---
+description: React and TypeScript standards for components, state, effects, and accessibility
+globs: "**/*.ts,**/*.tsx"
+alwaysApply: false
+---
+# React and TypeScript Engineering Standards
+
+Act as a Staff Frontend Engineer.
+
+Write production-quality React code optimized for:
+
+- correctness
+- readability
+- accessibility
+- predictable rendering
+- testability
+- maintainability
+
+## 1. Components
+
+Use functional components.
+
+Each component should have a clear responsibility.
+
+Prefer:
+
+- composition
+- focused components
+- explicit props
+- predictable data flow
+
+Avoid:
+
+- giant components
+- deeply nested conditional rendering
+- unrelated business logic inside components
+- premature component abstraction
+
+## 2. Component Responsibility
+
+A component should primarily handle:
+
+- rendering
+- user interaction
+- presentation state
+
+Move meaningful business logic into:
+
+- domain functions
+- hooks
+- feature-level modules
+
+when that logic becomes non-trivial or reusable.
+
+## 3. State
+
+Before adding state, ask:
+
+> Can this value be derived from existing state or props?
+
+Prefer derived values over duplicated state.
+
+Avoid storing:
+
+- values that can be calculated
+- redundant copies of props
+- transient values that do not require React state
+
+Maintain a single source of truth.
+
+## 4. Effects
+
+Treat `useEffect` as synchronization with an external system.
+
+Do not use effects simply to:
+
+- calculate derived values
+- transform data
+- respond to user events
+- synchronize state that could be derived
+
+Before adding an effect, identify the external system it synchronizes with.
+
+Avoid effect chains where one effect updates state that triggers another effect.
+
+## 5. Memoization
+
+Do not use:
+
+- `useMemo`
+- `useCallback`
+- `React.memo`
+
+by default.
+
+Use memoization when:
+
+- there is a demonstrated performance problem
+- referential stability is required for correctness
+- profiling or architectural reasoning justifies it
+
+Do not add memoization speculatively.
+
+## 6. TypeScript
+
+Prefer precise types.
+
+Avoid `any` unless there is a documented and justified reason.
+
+Prefer:
+
+- domain types
+- discriminated unions
+- utility types
+- explicit function contracts
+- type-safe API boundaries
+
+Avoid excessive type complexity.
+
+Types should improve correctness and developer experience.
+
+## 7. Event Handlers
+
+Keep event handlers focused.
+
+For non-trivial behavior, move business logic into testable functions or hooks.
+
+Avoid embedding complex business workflows directly inside JSX.
+
+## 8. Lists
+
+Always provide stable keys.
+
+Do not use array indexes as keys when list identity can change.
+
+## 9. Conditional Rendering
+
+Keep complex conditions readable.
+
+Extract meaningful conditions into:
+
+- variables
+- helper functions
+- domain predicates
+- smaller components
+
+Avoid deeply nested ternaries.
+
+## 10. Accessibility
+
+Use semantic HTML first.
+
+Prefer:
+
+- button
+- nav
+- main
+- section
+- form
+- label
+- heading
+
+over generic clickable `div` elements.
+
+Interactive controls must support:
+
+- keyboard navigation
+- visible focus
+- appropriate accessible names
+- appropriate semantics
+
+## 11. Performance
+
+Optimize based on evidence.
+
+Avoid:
+
+- unnecessary renders
+- unnecessary state
+- unnecessary network requests
+- expensive calculations during render
+
+Do not sacrifice readability for speculative performance improvements.
+
+## 12. Error Boundaries
+
+Where appropriate, isolate failures so that one feature failure does not unnecessarily break unrelated parts of the application.
+
+## 13. React Anti-Patterns
+
+Avoid:
+
+- mutating state directly
+- derived state stored unnecessarily
+- effect-driven state synchronization without justification
+- massive components
+- deeply nested prop chains
+- duplicated business logic
+- hidden side effects
+- unstable list keys
+- unnecessary context
+- unnecessary global state

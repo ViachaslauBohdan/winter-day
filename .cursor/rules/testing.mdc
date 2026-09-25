@@ -1,0 +1,112 @@
+---
+description: Production testing strategy focused on behavior, risk, confidence, and maintainability.
+globs: "src/**/*.ts,src/**/*.tsx,**/*.test.ts,**/*.test.tsx,**/*.spec.ts,**/*.spec.tsx"
+alwaysApply: false
+---
+
+# Testing Engineering Standards
+
+Act as a Staff Engineer responsible for software quality.
+
+The purpose of testing is:
+
+> Maximize confidence in important behavior at a reasonable engineering cost.
+
+Do not optimize for coverage percentage alone.
+
+## 1. Testing Strategy
+
+Prefer an appropriate testing pyramid:
+
+1. Unit tests for pure business logic
+2. Integration tests for feature behavior
+3. End-to-end tests for critical user journeys
+
+Do not use end-to-end tests where a lower-level test provides equivalent confidence more efficiently.
+
+## 2. Test Behavior
+
+Tests should verify observable behavior rather than implementation details.
+
+Prefer:
+
+```text
+user completes activity
+→ progress increases
+```
+
+over asserting that an internal setter was called.
+
+## 3. Business Logic
+
+Prioritize tests for calculations, state transitions, date handling, persistence, validation, domain rules, and error handling.
+
+For this application, test checklist completion, progress calculation, daily reset, persistence, restoring saved state, corrupted localStorage, and weekly statistics.
+
+Test streak calculation and activity customization only after that behavior exists. Do not add those features in order to test them.
+
+## 4. Edge Cases
+
+Consider empty data, missing data, first-use state, a new calendar day, midnight boundaries, malformed persisted data, duplicate entries, invalid values, partial data, and unexpected external responses.
+
+## 5. Regression Testing
+
+When fixing a bug:
+
+Reproduce the bug.
+Add a regression test.
+Fix the implementation.
+Verify the regression test.
+Run relevant existing tests.
+
+## 6. Test Isolation
+
+Tests should be deterministic.
+
+Avoid unnecessary dependence on:
+
+real network services
+system time
+global state
+test execution order
+external services
+
+Mock external boundaries when appropriate.
+
+## 7. Test Naming
+
+Test names should describe behavior.
+
+Prefer `calculates 4 completed activities as 67% progress` over `works correctly`.
+
+## 8. Avoid Brittle Tests
+
+Avoid:
+
+excessive snapshots
+implementation-detail assertions
+CSS-dependent selectors
+brittle DOM structure assumptions
+unnecessary mocks
+
+Prefer accessible selectors and user-visible behavior.
+
+## 9. Coverage
+
+Coverage is a signal, not the objective.
+
+Prioritize meaningful business logic and risk.
+
+100% coverage is not automatically evidence of quality.
+
+## 10. Definition of Done
+
+A meaningful feature should have:
+
+appropriate automated tests
+type safety
+lint passing
+production build passing
+important edge cases considered
+
+Tests should remain useful when implementation details change.

@@ -1,0 +1,128 @@
+.item {
+  list-style: none;
+}
+
+.item__button {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  min-height: 5.5rem;
+  padding: 1rem 1rem 1rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: var(--surface);
+  color: inherit;
+  text-align: left;
+  box-shadow: 0 1px 0 rgba(62, 42, 24, 0.04);
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.item__button:hover {
+  transform: translateY(-1px);
+}
+
+.item__button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.item--done .item__button {
+  border-color: var(--done-line);
+  background: var(--done-bg);
+}
+
+.item__emoji {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.9rem;
+  background: var(--emoji-bg);
+  font-size: 1.35rem;
+}
+
+.item--done .item__emoji {
+  background: var(--done-emoji);
+}
+
+.item__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.item__title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.item--done .item__title {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: rgba(47, 74, 42, 0.45);
+}
+
+.item__description {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.item__check {
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border: 2px solid var(--check-line);
+  border-radius: 999px;
+  background: var(--check-fill);
+  flex-shrink: 0;
+}
+
+.item__check--on {
+  border-color: var(--done-mark);
+  background: var(--done-mark);
+  animation: check-pop 280ms ease;
+}
+
+.item__check-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: transparent;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.item__check--on .item__check-icon {
+  stroke: var(--check-fill);
+}
+
+@keyframes check-pop {
+  0% {
+    transform: scale(0.82);
+  }
+  55% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item__button,
+  .item__check--on {
+    animation: none;
+    transition: none;
+  }
+}

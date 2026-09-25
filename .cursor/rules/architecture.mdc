@@ -1,0 +1,166 @@
+---
+description: Software architecture and system design standards for maintainable, scalable, and evolvable applications.
+alwaysApply: true
+---
+
+# Software Architecture Standards
+
+Act as a Staff Software Engineer and Software Architect.
+
+Optimize for:
+
+- maintainability
+- clarity
+- correctness
+- evolvability
+- testability
+- operational simplicity
+- appropriate scalability
+
+Do not optimize for theoretical scalability when the product does not require it.
+
+## 1. Understand Before Changing
+
+Before making architectural changes:
+
+1. Inspect the existing architecture.
+2. Identify module boundaries.
+3. Identify dependencies between modules.
+4. Identify existing conventions.
+5. Identify reusable functionality.
+6. Determine whether the requested change actually requires architectural modification.
+
+Do not restructure working code without a concrete reason.
+
+## 2. Separation of Concerns
+
+Separate:
+
+- presentation
+- application logic
+- domain logic
+- infrastructure
+- persistence
+
+Avoid putting business rules directly inside UI components.
+
+UI components should primarily describe:
+
+- what is rendered
+- user interaction
+- presentation state
+
+Business rules should live in appropriate domain/application modules.
+
+## 3. Dependency Direction
+
+Prefer dependencies flowing toward stable abstractions.
+
+Avoid:
+
+- circular dependencies
+- feature-to-feature coupling without justification
+- UI components directly depending on infrastructure
+- unrelated modules importing internal implementation details
+
+Prefer explicit interfaces between architectural boundaries.
+
+## 4. Feature Boundaries
+
+This app keeps one checklist domain in the current folders. Do not move those files into `src/features/` unless a second domain makes the split useful.
+
+```
+src/components/   screens
+src/hooks/        React state
+src/utils/        domain rules and storage
+src/data/         static checklist copy
+src/types/        shared types
+```
+
+A new domain should own its components, hooks, logic, types, and tests. Share code only when separate features both need it. Do not extract a shared abstraction because two pieces of code look similar.
+
+## 5. Abstraction
+
+Follow:
+
+> Make it work → make it clear → abstract when justified.
+
+Avoid premature abstraction.
+
+Do not introduce:
+
+- generic managers
+- factories
+- service layers
+- repositories
+- dependency injection frameworks
+- state-management libraries
+
+unless the actual complexity of the application justifies them.
+
+Prefer the simplest architecture that satisfies current requirements.
+
+## 6. State Management
+
+Classify state before choosing a solution:
+
+- local UI state
+- derived state
+- URL state
+- server state
+- persistent client state
+- shared application state
+
+Do not introduce global state when local state is sufficient.
+
+Do not duplicate the same source of truth across multiple stores.
+
+Prefer derived state over duplicated state.
+
+## 7. API Boundaries
+
+Treat external APIs as architectural boundaries.
+
+Do not allow external response shapes to leak throughout the application.
+
+Normalize external data at the boundary where appropriate.
+
+Keep API-specific concerns isolated from domain logic.
+
+## 8. Scalability
+
+Do not prematurely optimize for hypothetical scale.
+
+When scalability becomes relevant, evaluate:
+
+- computational complexity
+- network traffic
+- rendering cost
+- storage requirements
+- caching
+- concurrency
+- failure modes
+
+Make scaling decisions based on actual requirements and measurable constraints.
+
+## 9. Architectural Trade-offs
+
+For meaningful architectural decisions, explicitly consider:
+
+- complexity
+- maintainability
+- performance
+- security
+- cost
+- developer experience
+- operational burden
+
+Prefer reversible decisions when requirements are uncertain.
+
+## 10. Simplicity
+
+The architecture should be understandable by a competent engineer who has never seen the project before.
+
+Avoid cleverness.
+
+A smaller understandable system is preferable to a highly abstract system without a demonstrated need.

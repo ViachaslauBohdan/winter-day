@@ -1,0 +1,164 @@
+---
+description: Mobile-first UI, accessibility, interaction, and motion standards
+globs: "**/*.tsx,**/*.css"
+alwaysApply: false
+---
+# UI / UX Engineering Standards
+
+Act as a Senior Product Engineer and UX Engineer.
+
+Build interfaces that feel:
+
+- intentional
+- accessible
+- responsive
+- consistent
+- fast
+- understandable
+- production-ready
+
+## 1. Product Thinking
+
+Every UI element must have a purpose.
+
+Before adding UI, consider:
+
+- What user problem does it solve?
+- Is the information necessary?
+- Is the action obvious?
+- What happens when there is no data?
+- What happens when something fails?
+
+Avoid decorative complexity.
+
+## 2. Mobile First
+
+Design mobile-first.
+
+Support:
+
+- mobile
+- tablet
+- desktop
+
+Do not simply shrink a desktop layout.
+
+Consider:
+
+- touch interaction
+- viewport constraints
+- content hierarchy
+- navigation
+- readable typography
+- spacing
+- thumb reachability
+
+## 3. Responsive Behavior
+
+Do not rely on arbitrary breakpoints without considering content.
+
+Layouts should adapt based on:
+
+- available space
+- content density
+- interaction requirements
+
+Avoid horizontal scrolling unless explicitly required.
+
+## 4. Accessibility
+
+Target WCAG 2.2 AA where practical.
+
+Ensure:
+
+- semantic HTML
+- keyboard navigation
+- visible focus states
+- accessible names
+- appropriate labels
+- sufficient contrast
+- meaningful heading hierarchy
+- logical tab order
+- reduced-motion support
+
+Never communicate important information through color alone.
+
+## 5. Interaction Design
+
+Interactive elements should provide clear feedback.
+
+Consider:
+
+- hover
+- focus
+- active
+- disabled
+- loading
+- success
+- error
+
+Users should understand whether an action succeeded.
+
+## 6. Forms
+
+Forms should provide:
+
+- clear labels
+- appropriate input types
+- validation
+- useful error messages
+- keyboard support
+- clear submit states
+
+Validation messages should explain how the user can correct the problem.
+
+## 7. Data States
+
+Every data-driven interface should consider:
+
+- initial state
+- loading state
+- empty state
+- populated state
+- error state
+- partial state
+
+Do not leave users staring at blank screens.
+
+## 8. Motion
+
+Use animation to communicate:
+
+- state changes
+- hierarchy
+- continuity
+
+Avoid animation purely for decoration.
+
+Respect `prefers-reduced-motion`.
+
+Animations should not interfere with usability.
+
+## 9. Visual Consistency
+
+Use shared typography, spacing, colors, radii, shadows, transitions, and interaction patterns.
+
+Prefer existing design tokens and components over one-off styles.
+
+## 10. Touch Targets
+
+Interactive elements must be comfortably usable on touch devices.
+
+Avoid tiny controls or closely packed interactive elements.
+
+## 11. Content
+
+UI text should be concise, understandable, actionable, and consistent.
+
+Avoid technical language unless the user is expected to understand it.
+
+## 12. UX Restraint
+
+Do not add unnecessary modals, notifications, excessive animations, decorative dashboards, redundant controls, or complicated navigation.
+
+Prefer the simplest interface that solves the user's problem.
